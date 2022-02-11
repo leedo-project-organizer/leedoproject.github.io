@@ -36,14 +36,7 @@ async function dappGetAccount(_web3) {
   return _account;
 }
 
-async function AddTokenToWallet(
-  _ethereum,
-  _chainId,
-  _token_address,
-  _symbol,
-  _decimal,
-  _imgUrl
-) {
+async function AddTokenToWallet(_ethereum, _chainId, _token_address, _symbol, _decimal, _imgUrl) {
   let token_address = _token_address;
   await _ethereum
     .request({
@@ -69,60 +62,53 @@ async function AddTokenToWallet(
 }
 
 /* Switch Network */
-async function switchNetwork(
-  _ethereum,
-  targetNetwork,
-  _chainName,
-  _tokenName,
-  _symbol,
-  _decimal,
-  _rpcUrls,
-  _blockExplorerUrls,
-  _myAddr
-) {
-  console.log("switchNetwork =>", targetNetwork);
+async function switchNetwork(_ethereum, targetNetwork, _chainName, _tokenName, _symbol, _decimal, _rpcUrls, _blockExplorerUrls) {
+  // console.log("switchNetwork =>", targetNetwork);
+  let myAccount = await dappGetAccount(web3);
 
-  let network_rpc = "https://eth-mainnet.alchemyapi.io/v2";
-  switch (targetNetwork) {
-    case 1:
-      network_rpc = "https://eth-mainnet.alchemyapi.io/v2";
-      break;
-    case 137:
-      network_rpc = "https://polygon-mainnet.g.alchemy.com/v2";
-      break;
-    case 80001:
-      network_rpc = "https://matic-mumbai.chainstacklabs.com/";
-      break;
-  }
-  try {
-    await _ethereum.request({
-      method: "wallet_switchEthereumChain",
-      params: [{ chainId: "0x" + targetNetwork.toString(16) }],
-    });
-  } catch (switchError) {
-    // console.log("switchError =>", switchError);
-    // console.log("network_rpc => ", network_rpc);
-    if (switchError.code === 4902) {
-      const params = {
-        chainId: "0x" + targetNetwork.toString(16), // A 0x-prefixed hexadecimal string
-        chainName: "Matic Polygon Mainnet",
-        nativeCurrency: {
-          name: _chainName, //"Matic Token",
-          symbol: _tokenName, //"MATIC", // 2-6 characters long
-          decimals: _decimal, //18,
-        },
-        rpcUrls: [_rpcUrls], // ["https://polygon-rpc.com/"],
-        blockExplorerUrls: [_blockExplorerUrls], //["https://polygonscan.com"],
-      };
+  if (myAccount.length > 0) {
+    let network_rpc = "https://eth-mainnet.alchemyapi.io/v2";
+    switch (targetNetwork) {
+      case 1:
+        network_rpc = "https://eth-mainnet.alchemyapi.io/v2";
+        break;
+      case 137:
+        network_rpc = "https://polygon-mainnet.g.alchemy.com/v2";
+        break;
+      case 80001:
+        network_rpc = "https://matic-mumbai.chainstacklabs.com/";
+        break;
+    }
+    try {
+      await _ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: "0x" + targetNetwork.toString(16) }],
+      });
+    } catch (switchError) {
+      // console.log("switchError =>", switchError);
+      // console.log("network_rpc => ", network_rpc);
+      if (switchError.code === 4902) {
+        const params = {
+          chainId: "0x" + targetNetwork.toString(16), // A 0x-prefixed hexadecimal string
+          chainName: _chainName, //"Matic Polygon Mainnet",
+          nativeCurrency: {
+            name: _tokenName, //"Matic Token",
+            symbol: _symbol, //"MATIC", // 2-6 characters long
+            decimals: _decimal, //18,
+          },
+          rpcUrls: [_rpcUrls], // ["https://polygon-rpc.com/"],
+          blockExplorerUrls: [_blockExplorerUrls], //["https://polygonscan.com"],
+        };
 
-      try {
-        await _ethereum.request({
-          method: "wallet_addEthereumChain",
-          params: [params, _myAddr],
-        });
-      } catch (addError) {
-        console.log("Netword add failed... =>", addError);
-        // Netword add failed...
+        try {
+          await _ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [params, myAccount[0]],
+          });
+        } catch (addError) {
+          console.log("Netword add failed... =>", addError);
+          // Netword add failed...
+        }
       }
     }
   }

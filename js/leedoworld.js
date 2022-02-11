@@ -1,6 +1,13 @@
 let arrivedIds = [];
 let walletConnected = false;
 
+const POLYGON_CHAIN_NAME = "Matic Polygon Mainnet";
+const POLYGON_TOKEN_NAME = "Matic Token";
+const POLYGON_SYMBOL = "MATIC";
+const POLYGON_DECIMAL = 18;
+const POLYGON_RPC_URL = "https://polygon-rpc.com/";
+const POLYGON_BLOCK_EXPLORER = "https://polygonscan.com";
+
 window.addEventListener("load", function () {
   loadWeb3();
   if (typeof window.web3 !== "undefined") {
@@ -83,7 +90,7 @@ async function startApp() {
       //   initBlankItems();
       // }
     } else {
-      switchNetwork(ethereum, 137);
+      switchNetwork(ethereum, 137, POLYGON_CHAIN_NAME, POLYGON_TOKEN_NAME, POLYGON_SYMBOL, POLYGON_DECIMAL, POLYGON_RPC_URL, POLYGON_BLOCK_EXPLORER);
       walletConnected = false;
       initBlankItems();
     }
