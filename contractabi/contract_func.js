@@ -348,7 +348,7 @@ async function RequestAddToken() {
           address: token_address,
           symbol: "LEEDO",
           decimals: 18,
-          image: "https://gosquidgame.com/leedo_icon.png",
+          image: "https://leedoproject.com/leedo_token_icon.png",
         },
       },
     })

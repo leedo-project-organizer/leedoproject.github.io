@@ -142,10 +142,6 @@ async function getContracts() {
   }
 }
 
-async function RequestAddToken() {
-  await AddTokenToWallet(ethereum, chainId, leedorianERC20Address[chainId], "LEEDO", 18, "https://gosquidgame.com/leedo_icon.png");
-}
-
 async function fetchBalanceInfo() {
   const myleedobalance = await getLeedoBalance(chainId, myAddr);
   let balance_gwei = ethers.utils.formatUnits(myleedobalance, 18);
@@ -156,7 +152,7 @@ async function fetchBalanceInfo() {
 }
 
 async function RequestAddToken() {
-  await AddTokenToWallet(ethereum, chainId, leedorianERC20Address[chainId], "LEEDO", 18, "https://gosquidgame.com/leedo_icon.png");
+  await AddTokenToWallet(ethereum, chainId, leedorianERC20Address[chainId], "LEEDO", 18, "https://leedoproject.com/leedo_token_icon.png");
 }
 
 /* Metaverse Card List */

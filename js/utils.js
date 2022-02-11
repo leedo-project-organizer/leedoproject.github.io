@@ -35,39 +35,6 @@ function getWindowHeight() {
   return height;
 }
 
-async function AddTokenToWallet(_ethereum, _chainId) {
-  let token_address;
-  if (_chainId === 137 || _chainId === 80001) {
-    token_address = leedorianERC20Address[_chainId];
-  } else {
-    token_address = leedoerc20Address[_chainId];
-  }
-
-  console.log("token_address => ", token_address);
-
-  await _ethereum
-    .request({
-      method: "wallet_watchAsset",
-      params: {
-        type: "ERC20",
-        options: {
-          address: token_address,
-          symbol: "LEEDO",
-          decimals: 18,
-          image: "https://gosquidgame.com/leedo_icon.png",
-        },
-      },
-    })
-    .then((success) => {
-      if (success) {
-        console.log("LEEDO successfully added to wallet!");
-      } else {
-        throw new Error("Something went wrong.");
-      }
-    })
-    .catch(console.error);
-}
-
 function gotoDiscord() {
   var popup = window.open("https://discord.com/invite/xkTxRjjhVs", "discord");
 }

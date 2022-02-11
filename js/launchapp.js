@@ -451,7 +451,7 @@ async function checkOnetimeBonusClaimAvailable() {
 }
 
 async function RequestAddToken() {
-  await AddTokenToWallet(ethereum, chainId, leedoerc20Address[chainId], "LEEDO", 18, "https://gosquidgame.com/leedo_icon.png");
+  await AddTokenToWallet(ethereum, chainId, leedoerc20Address[chainId], "LEEDO", 18, "https://leedoproject.com/leedo_token_icon.png");
 }
 
 async function runRewardsClaim() {
