@@ -71,17 +71,17 @@ async function startApp() {
 
     if (chainId === 137 || chainId === 80001) {
       await getAccount();
-      if (walletConnected) {
-        initUseItems();
-        let networkname = networkList;
-        // console.log("networkname ", networkname);
-        // console.log("networkList ", networkname[chainId]);
-        $("#myaddress-network").html(networkname[chainId]);
-        await fetchBalanceInfo();
-        showMetaverseCardList("metaverse");
-      } else {
-        initBlankItems();
-      }
+      // if (walletConnected) {
+      initUseItems();
+      let networkname = networkList;
+      // console.log("networkname ", networkname);
+      // console.log("networkList ", networkname[chainId]);
+      $("#myaddress-network").html(networkname[chainId]);
+      await fetchBalanceInfo();
+      showMetaverseCardList("metaverse");
+      // } else {
+      //   initBlankItems();
+      // }
     } else {
       switchNetwork(ethereum, 137);
       walletConnected = false;

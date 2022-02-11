@@ -83,25 +83,19 @@ async function startApp() {
     console.log("chainID => ", chainId);
     if (chainId === 1 || chainId === 4 || chainId === 5) {
       await getAccount();
-      if (walletConnected) {
-        initUseItems();
-        let networkname = networkList;
-        $("#myaddress-network").html(networkname[chainId]);
+      // if (walletConnected) {
+      initUseItems();
+      let networkname = networkList;
+      $("#myaddress-network").html(networkname[chainId]);
 
-        await fetchStakingInfo();
-        is_Vault_Approved = await getApproved(myAddr, chainId);
-        // if (is_Vault_Approved) {
-        //   document.getElementById("stake-btn").innerText = "Check-In";
-        // } else {
-        //   document.getElementById("stake-btn").innerText = "Approve";
-        // }
-
-        staked_cards = await myStakedCount(myAddr);
-        await fetchRewardsInfo();
-        listTabData();
-      } else {
-        initBlankItems();
-      }
+      await fetchStakingInfo();
+      is_Vault_Approved = await getApproved(myAddr, chainId);
+      staked_cards = await myStakedCount(myAddr);
+      await fetchRewardsInfo();
+      listTabData();
+      // } else {
+      //   initBlankItems();
+      // }
     } else {
       switchNetwork(ethereum, 1);
       walletConnected = false;
